@@ -1,0 +1,13 @@
+{
+	"name": "test-desktop-app",
+	"version": "1.0.0",
+	"main": "electron/main.js",
+	"license": "MIT",
+	"type": "module",
+	"scripts": {
+		"dev": "electron ."
+	},
+	"devDependencies": {
+		"electron": "^28.1.3"
+	}
+}
