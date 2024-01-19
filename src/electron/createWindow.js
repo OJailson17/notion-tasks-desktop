@@ -1,8 +1,4 @@
 import { BrowserWindow } from 'electron';
-import path from 'node:path';
-
-const __filename = new URL(import.meta.url).pathname;
-const __dirname = path.dirname(__filename);
 
 export const createWindow = () => {
 	const win = new BrowserWindow({
@@ -13,13 +9,11 @@ export const createWindow = () => {
 		fullscreenable: false,
 		show: false,
 		webPreferences: {
-			// nodeIntegration: true,
-			preload: path.resolve(__dirname, 'preload.js'),
+			nodeIntegration: true,
 		},
 	});
 
-	win.loadFile('index.html');
-	// win.webContents.loadURL('https://tourmaline-fudge-b6a11d.netlify.app');
+	win.loadFile('src/index.html');
 
 	// Intercept the window close event
 	win.on('close', event => {

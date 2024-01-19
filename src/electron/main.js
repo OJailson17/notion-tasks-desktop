@@ -1,4 +1,4 @@
-import { app, globalShortcut } from 'electron/main';
+import { app, globalShortcut } from 'electron';
 import { createWindow } from './createWindow.js';
 import { createTray } from './tray.js';
 import { controlWindow } from './controlWindow.js';
