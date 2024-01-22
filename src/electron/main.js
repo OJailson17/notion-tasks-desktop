@@ -28,6 +28,10 @@ app.on('window-all-closed', () => {
 	}
 });
 
+app.on('activate', function () {
+	if (BrowserWindow.getAllWindows().length === 0) createWindow();
+});
+
 // Quit the application only when explicitly called
 app.on('before-quit', () => {
 	app.isQuiting = true;

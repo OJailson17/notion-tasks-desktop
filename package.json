@@ -1,10 +1,11 @@
 {
 	"name": "notion-tasks-desktop",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"main": "src/electron/main.js",
 	"license": "MIT",
 	"type": "module",
 	"author": "Jailson de Oliveira",
+	"description": "Application to track all the tasks saved on Notion",
 	"scripts": {
 		"dev": "electron .",
 		"build": "electron-builder",
@@ -20,7 +21,7 @@
 		"appId": "com.jailson.tasks",
 		"productName": "Notion Tasks",
 		"asar": true,
-		"target": "NSIS",
+		"target": "nsis",
 		"directories": {
 			"output": "build"
 		},

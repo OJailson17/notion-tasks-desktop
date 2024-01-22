@@ -1,4 +1,4 @@
-import { Tray, nativeImage, ipcMain } from 'electron';
+import { Tray, nativeImage } from 'electron';
 import path from 'node:path';
 import fs from 'node:fs';
 
@@ -7,14 +7,16 @@ const __dirname = path.dirname(__filename);
 
 // !FIX tray icon not showing in prod
 function createTray() {
-	const iconPath = path.join(__dirname, '../../assets');
-	const icon = nativeImage.createFromPath(iconPath);
+	const iconPath = path.join(__dirname, '../');
+	const icon = nativeImage.createFromPath('./assets/icon.png');
 	const tray = new Tray(icon);
 
-	if (fs.existsSync(iconPath)) {
-		tray.setToolTip('exist');
+	console.log(fs.readdirSync('./assets'));
+
+	if (fs.existsSync('./assets/icon.png')) {
+		tray.setToolTip('yes');
 	} else {
-		tray.setToolTip('it doesnt');
+		tray.setToolTip(`no`);
 	}
 
 	return tray;
