@@ -1,9 +1,9 @@
 {
 	"name": "notion-tasks-desktop",
-	"version": "1.0.1",
+	"version": "1.0.2",
 	"main": "src/electron/main.js",
-	"license": "MIT",
 	"type": "module",
+	"license": "MIT",
 	"author": "Jailson de Oliveira",
 	"description": "Application to track all the tasks saved on Notion",
 	"scripts": {

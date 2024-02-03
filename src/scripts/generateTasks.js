@@ -1,11 +1,4 @@
-// window.bridge.sendSettings((event, settings) => {
-// 	console.log(settings);
-// });
-
 import { checkTask } from './checkTask.js';
-
-window.electron.ipcRenderer.send('test', 'message');
-window.electron.ipcRenderer.on('test', (event, data) => console.log(data));
 
 // The container the will render the whole task list
 const taskListContainer = document.querySelector('#tasks-container');
