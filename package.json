@@ -7,8 +7,7 @@
 	"description": "Application to track all the tasks saved on Notion",
 	"scripts": {
 		"dev": "electron .",
-		"build": "electron-builder",
-		"bundle": "esbuild ./src/electron/*.js --bundle --outdir=./dist --platform=node"
+		"build": "electron-builder"
 	},
 	"devDependencies": {
 		"babel-loader": "^9.1.3",

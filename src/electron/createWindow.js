@@ -21,7 +21,10 @@ const createWindow = () => {
 
 	// Send environment variables to renderer process
 	win.webContents.on('did-finish-load', () => {
-		win.webContents.send('env-variables', JSON.stringify(process.env));
+		win.webContents.send(
+			'env-variables',
+			JSON.stringify({ API_BASE_URL: process.env.API_BASE_URL }),
+		);
 	});
 
 	// Intercept the window close event
