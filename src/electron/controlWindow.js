@@ -1,4 +1,4 @@
-export const controlWindow = (win, tray) => {
+const controlWindow = (win, tray) => {
 	const toggle = () => {
 		if (win.isVisible()) {
 			win.hide();
@@ -31,3 +31,5 @@ export const controlWindow = (win, tray) => {
 		toggle,
 	};
 };
+
+module.exports = { controlWindow };

@@ -1,15 +1,12 @@
-export const checkTask = async (id, isChecked) => {
-	return fetch(
-		`https://notion-tasks-extension-server.vercel.app/status/update/${id}`,
-		{
-			method: 'POST',
-			headers: {
-				Accept: 'application/json',
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify({ isChecked }),
+export const checkTask = async ({ id, isChecked, API_URL }) => {
+	return fetch(`${API_URL}/status/update/${id}`, {
+		method: 'POST',
+		headers: {
+			Accept: 'application/json',
+			'Content-Type': 'application/json',
 		},
-	)
+		body: JSON.stringify({ isChecked }),
+	})
 		.then(res => res.json())
 		.then(data => {
 			console.log({ data });

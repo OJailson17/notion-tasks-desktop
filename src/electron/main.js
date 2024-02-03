@@ -1,13 +1,12 @@
-import { app, globalShortcut } from 'electron';
-import { createWindow } from './createWindow.js';
-import { createTray } from './tray.js';
-import { controlWindow } from './controlWindow.js';
+require('dotenv').config();
+const { app, globalShortcut } = require('electron');
+const { createWindow } = require('./createWindow.js');
+const { createTray } = require('./tray.js');
+const { controlWindow } = require('./controlWindow.js');
 
 const App = () => {
 	const win = createWindow();
 	const tray = createTray();
-
-	// win.webContents.openDevTools();
 
 	const { toggle } = controlWindow(win, tray);
 

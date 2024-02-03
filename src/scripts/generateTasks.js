@@ -1,10 +1,20 @@
 import { checkTask } from './checkTask.js';
 
+let getEnvVariables = new Promise(resolve => {
+	window.electron.ipcRenderer.on('env-variables', (event, envVariables) => {
+		resolve(JSON.parse(envVariables));
+	});
+});
+
+getEnvVariables.then(env => {
+	getTasksData(env.API_BASE_URL);
+});
+
 // The container the will render the whole task list
 const taskListContainer = document.querySelector('#tasks-container');
 
 // Render the list of elements
-const generateTasksList = listItems => {
+const generateTasksList = ({ listItems, API_URL }) => {
 	taskListContainer.innerHTML = '';
 
 	// Create li on the ul element with the task title
@@ -28,14 +38,18 @@ const generateTasksList = listItems => {
 		// Add a event listener to verify if input is checked
 		checkboxInput.addEventListener('change', async e => {
 			// Call function to change task status on Notion
-			checkTask(event.target.dataset.id, event.target.checked)
+			checkTask({
+				id: event.target.dataset.id,
+				isChecked: event.target.checked,
+				API_URL,
+			})
 				.then(async response => {
 					console.log({ response });
 
 					// Re-reder the list if the status changes correctly
 					if (response.status === 200) {
 						console.log({ response });
-						await getTasksData();
+						await getTasksData(API_URL);
 					}
 				})
 				.catch(err => console.log(err));
@@ -86,17 +100,15 @@ const generateEmptyComponent = () => {
 };
 
 // Get the tasks data from api
-const getTasksData = async () => {
-	fetch('https://notion-tasks-extension-server.vercel.app')
+const getTasksData = async API_URL => {
+	fetch(API_URL)
 		.then(res => res.json())
 		.then(data => {
 			if (data.length <= 0) {
 				generateEmptyComponent();
 			} else {
-				generateTasksList(data);
+				generateTasksList({ listItems: data, API_URL });
 			}
 		})
 		.catch(err => console.log(err));
 };
-
-getTasksData();

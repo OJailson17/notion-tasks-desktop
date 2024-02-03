@@ -1,6 +1,6 @@
-import { Tray, nativeImage } from 'electron';
+const { Tray, nativeImage } = require('electron');
 
-export function createTray() {
+function createTray() {
 	const icon = nativeImage.createFromPath('./resources/assets/icon.png');
 	const tray = new Tray(icon);
 
@@ -8,3 +8,5 @@ export function createTray() {
 
 	return tray;
 }
+
+module.exports = { createTray };
