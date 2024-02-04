@@ -8,6 +8,21 @@ const App = () => {
 	const win = createWindow();
 	const tray = createTray();
 
+	// Check if another instance of the application is already running
+	const gotSingleInstanceLock = app.requestSingleInstanceLock();
+
+	if (!gotSingleInstanceLock) {
+		app.quit();
+	} else {
+		app.on('second-instance', () => {
+			// When a second instance is launched, focus on the existing instance
+			if (win) {
+				if (win.isMinimized()) win.restore();
+				win.focus();
+			}
+		});
+	}
+
 	const { toggle } = controlWindow(win, tray);
 
 	// Show the main window when the tray icon is clicked
