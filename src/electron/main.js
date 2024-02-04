@@ -1,5 +1,5 @@
 require('dotenv').config();
-const { app, globalShortcut } = require('electron');
+const { app, globalShortcut, Menu } = require('electron');
 const { createWindow } = require('./createWindow.js');
 const { createTray } = require('./tray.js');
 const { controlWindow } = require('./controlWindow.js');
@@ -12,6 +12,17 @@ const App = () => {
 
 	// Show the main window when the tray icon is clicked
 	tray.on('click', toggle);
+
+	// Create a context menu to close the application
+	const contextMenu = Menu.buildFromTemplate([
+		{
+			label: 'Quit',
+			type: 'normal',
+			role: 'quit',
+		},
+	]);
+
+	tray.setContextMenu(contextMenu);
 
 	// Register a global shortcut to open the app
 	globalShortcut.register('CommandOrControl+Shift+K', () => {
