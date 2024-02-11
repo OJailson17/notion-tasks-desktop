@@ -15,8 +15,6 @@ const taskListContainer = document.querySelector('#tasks-container');
 
 // Render the list of elements
 const generateTasksList = ({ listItems, API_URL }) => {
-	taskListContainer.innerHTML = '';
-
 	// Create li on the ul element with the task title
 	listItems.forEach(item => {
 		// Create task element
@@ -92,23 +90,40 @@ const generateTasksList = ({ listItems, API_URL }) => {
 	});
 };
 
-// Render a paragraph to show empty list message
 const generateEmptyComponent = () => {
 	taskListContainer.innerHTML = `
-	<p class="empty-list">No tasks</p>
+		<div class="empty-list">
+			<p class="hidden">No tasks</p>
+		</div>
+		<div class="spin hidden"></div>
 	`;
 };
 
 // Get the tasks data from api
 const getTasksData = async API_URL => {
+	taskListContainer.innerHTML = '';
+
+	generateEmptyComponent();
+
+	const emptyMessage = document.querySelector('.empty-list p');
+	const spinner = document.querySelector('.spin');
+
+	spinner.classList.remove('hidden');
+
 	fetch(API_URL)
 		.then(res => res.json())
 		.then(data => {
 			if (data.length <= 0) {
-				generateEmptyComponent();
+				emptyMessage.classList.remove('hidden');
 			} else {
 				generateTasksList({ listItems: data, API_URL });
 			}
+
+			spinner.classList.add('hidden');
 		})
-		.catch(err => console.log(err));
+		.catch(err => {
+			spinner.classList.add('hidden');
+			alert('Error');
+			console.log(err);
+		});
 };
