@@ -1,20 +1,12 @@
-import { checkTask } from './checkTask.js';
-
-let getEnvVariables = new Promise(resolve => {
-	window.electron.ipcRenderer.on('env-variables', (event, envVariables) => {
-		resolve(JSON.parse(envVariables));
-	});
-});
-
-getEnvVariables.then(env => {
-	getTasksData(env.API_BASE_URL);
-});
+import { getTasksData } from './getTasks.js';
+import { getPage } from './script.js';
+import { updateProjectStatus } from './updateProjectStatus.js';
 
 // The container the will render the whole task list
 const taskListContainer = document.querySelector('#tasks-container');
 
 // Render the list of elements
-const generateTasksList = ({ listItems, API_URL }) => {
+export const generateProjectsTasksList = ({ listItems, API_URL }) => {
 	// Create li on the ul element with the task title
 	listItems.forEach(item => {
 		// Create task element
@@ -36,18 +28,18 @@ const generateTasksList = ({ listItems, API_URL }) => {
 		// Add a event listener to verify if input is checked
 		checkboxInput.addEventListener('change', async e => {
 			// Call function to change task status on Notion
-			checkTask({
+			updateProjectStatus({
 				id: event.target.dataset.id,
 				isChecked: event.target.checked,
 				API_URL,
 			})
 				.then(async response => {
-					console.log({ response });
+					const { page } = getPage();
 
 					// Re-reder the list if the status changes correctly
 					if (response.status === 200) {
 						console.log({ response });
-						await getTasksData(API_URL);
+						await getTasksData({ API_URL, page });
 					}
 				})
 				.catch(err => console.log(err));
@@ -88,42 +80,4 @@ const generateTasksList = ({ listItems, API_URL }) => {
 		// Append the task container on the
 		taskListContainer?.appendChild(taskDiv);
 	});
-};
-
-const generateEmptyComponent = () => {
-	taskListContainer.innerHTML = `
-		<div class="empty-list">
-			<p class="hidden">No tasks</p>
-		</div>
-		<div class="spin hidden"></div>
-	`;
-};
-
-// Get the tasks data from api
-const getTasksData = async API_URL => {
-	taskListContainer.innerHTML = '';
-
-	generateEmptyComponent();
-
-	const emptyMessage = document.querySelector('.empty-list p');
-	const spinner = document.querySelector('.spin');
-
-	spinner.classList.remove('hidden');
-
-	fetch(API_URL)
-		.then(res => res.json())
-		.then(data => {
-			if (data.length <= 0) {
-				emptyMessage.classList.remove('hidden');
-			} else {
-				generateTasksList({ listItems: data, API_URL });
-			}
-
-			spinner.classList.add('hidden');
-		})
-		.catch(err => {
-			spinner.classList.add('hidden');
-			alert('Error');
-			console.log(err);
-		});
 };

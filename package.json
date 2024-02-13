@@ -1,6 +1,6 @@
 {
 	"name": "notion-tasks-desktop",
-	"version": "1.0.4",
+	"version": "1.0.5",
 	"main": "src/electron/main.js",
 	"license": "MIT",
 	"author": "Jailson de Oliveira",
