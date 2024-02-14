@@ -131,10 +131,25 @@ footer a {
 	margin-top: 1rem;
 }
 
-.tasks-container .task span {
+.tasks-container .task span,
+.study-container {
 	width: 90%;
 	word-break: break-all;
 	word-wrap: break-word;
+}
+
+.tasks-container .task .study-container {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	gap: 0.2rem;
+}
+
+.tasks-container .task .study-container p {
+	background-color: gray;
+	padding: 0.1rem 0.5rem;
+	max-width: max-content;
+	border-radius: 6px;
 }
 
 .tasks-container .task .skip-button {

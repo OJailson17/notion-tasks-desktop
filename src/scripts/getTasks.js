@@ -1,7 +1,7 @@
-// import { tasks } from '../../data.js';
 import { generateEmptyComponent } from './empyComponent.js';
 import { generateLanguageTasksList } from './generateLanguageTasks.js';
 import { generateProjectsTasksList } from './generateProjectTasks.js';
+import { generateStudyTasksList } from './generateStudyTasks.js';
 
 const taskListContainer = document.querySelector('#tasks-container');
 
@@ -16,8 +16,6 @@ export const getTasksData = async ({ API_URL, page }) => {
 
 	spinner.classList.remove('hidden');
 
-	// generateLanguageTasksList({ listItems: tasks, API_URL });
-
 	const getTasksList = ({ page = 'projects', items }) => {
 		if (page === 'languages') {
 			generateLanguageTasksList({
@@ -25,7 +23,7 @@ export const getTasksData = async ({ API_URL, page }) => {
 				API_URL,
 			});
 		} else if (page === 'study') {
-			generateProjectsTasksList({
+			generateStudyTasksList({
 				listItems: items,
 				API_URL,
 			});

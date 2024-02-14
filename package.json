@@ -19,6 +19,11 @@
 		"appId": "com.jailson.tasks",
 		"productName": "NotionTasks",
 		"asar": true,
+		"asarUnpack": [
+			"notes.md",
+			"data.js",
+			".env"
+		],
 		"target": "nsis",
 		"directories": {
 			"output": "build"
