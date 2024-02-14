@@ -103,7 +103,6 @@ footer a {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	/* justify-content: center; */
 
 	background-color: var(--background-primary);
 	font-weight: 600;
@@ -127,7 +126,6 @@ footer a {
 	border-radius: 5px;
 	font-size: 0.875rem;
 	font-weight: 400;
-	word-wrap: break-word;
 }
 
 .task + .task {
@@ -136,6 +134,29 @@ footer a {
 
 .tasks-container .task span {
 	width: 90%;
+	word-break: break-all;
+	word-wrap: break-word;
+}
+
+.tasks-container .task .skip-button {
+	width: 1.5rem;
+	height: 1.5rem;
+
+	background-color: transparent;
+	color: var(--text);
+	border-radius: 6px;
+	border: none;
+	cursor: pointer;
+}
+.tasks-container .task .skip-button:hover {
+	border: 1px solid var(--highlight);
+	animation: all 0.2s linear;
+}
+
+.tasks-container .task .skip-button img {
+	width: 100%;
+	height: 100%;
+	pointer-events: none;
 }
 
 .tasks-container .task .status {
@@ -150,7 +171,8 @@ footer a {
 	color: darkgray;
 }
 
-.overdue {
+.overdue,
+.skipped {
 	background-color: red;
 }
 

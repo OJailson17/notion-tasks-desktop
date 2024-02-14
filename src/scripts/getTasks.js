@@ -1,5 +1,6 @@
 // import { tasks } from '../../data.js';
 import { generateEmptyComponent } from './empyComponent.js';
+import { generateLanguageTasksList } from './generateLanguageTasks.js';
 import { generateProjectsTasksList } from './generateProjectTasks.js';
 
 const taskListContainer = document.querySelector('#tasks-container');
@@ -15,7 +16,26 @@ export const getTasksData = async ({ API_URL, page }) => {
 
 	spinner.classList.remove('hidden');
 
-	// generateProjectsTasksList({ listItems: tasks, API_URL });
+	// generateLanguageTasksList({ listItems: tasks, API_URL });
+
+	const getTasksList = ({ page = 'projects', items }) => {
+		if (page === 'languages') {
+			generateLanguageTasksList({
+				listItems: items,
+				API_URL,
+			});
+		} else if (page === 'study') {
+			generateProjectsTasksList({
+				listItems: items,
+				API_URL,
+			});
+		} else {
+			generateProjectsTasksList({
+				listItems: items,
+				API_URL,
+			});
+		}
+	};
 
 	fetch(`${API_URL}/${page}`)
 		.then(res => res.json())
@@ -23,7 +43,7 @@ export const getTasksData = async ({ API_URL, page }) => {
 			if (data.length <= 0) {
 				emptyMessage.classList.remove('hidden');
 			} else {
-				generateProjectsTasksList({ listItems: data, API_URL });
+				getTasksList({ page, items: data });
 			}
 
 			spinner.classList.add('hidden');
