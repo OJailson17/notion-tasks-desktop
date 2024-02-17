@@ -1,3 +1,4 @@
+// import { tasks } from '../../data.js';
 import { generateEmptyComponent } from './empyComponent.js';
 import { generateLanguageTasksList } from './generateLanguageTasks.js';
 import { generateProjectsTasksList } from './generateProjectTasks.js';
@@ -10,6 +11,8 @@ export const getTasksData = async ({ API_URL, page }) => {
 	taskListContainer.innerHTML = '';
 
 	generateEmptyComponent();
+
+	// generateLanguageTasksList({ listItems: tasks, API_URL });
 
 	const emptyMessage = document.querySelector('.empty-list p');
 	const spinner = document.querySelector('.spin');

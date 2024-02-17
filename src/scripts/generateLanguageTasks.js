@@ -100,9 +100,22 @@ export const generateLanguageTasksList = ({ listItems, API_URL }) => {
 			}
 		}
 
+		// add a today badge if task is from today
+		const isFromToday =
+			new Date().toLocaleDateString() ===
+			new Date(item.date).toLocaleDateString();
+
+		if (isFromToday) {
+			const todayBadge = document.createElement('p');
+			todayBadge.innerText = 'today';
+			todayBadge.setAttribute('class', 'today-badge');
+
+			taskDiv.appendChild(todayBadge);
+		}
+
 		// Append the input, span and div element in the task div container
-		taskDiv.appendChild(checkboxInput);
-		taskDiv.appendChild(span);
+		taskDiv.insertBefore(checkboxInput, taskDiv.childNodes[0]);
+		taskDiv.insertBefore(span, taskDiv.childNodes[1]);
 		taskDiv.appendChild(skipButton);
 		taskDiv.appendChild(statusElement);
 

@@ -134,7 +134,7 @@ footer a {
 .tasks-container .task span,
 .study-container {
 	width: 90%;
-	word-break: break-all;
+	/* word-break: break-all; */
 	word-wrap: break-word;
 }
 
@@ -177,6 +177,11 @@ footer a {
 	padding: 3px;
 	border-radius: 50%;
 	position: relative;
+}
+
+.tasks-container .task .today-badge {
+	color: var(--highlight);
+	font-size: 12px;
 }
 
 .tasks-container .empty-list {
