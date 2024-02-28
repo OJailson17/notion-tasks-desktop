@@ -1,5 +1,6 @@
 // import { tasks } from '../../data.js';
 import { generateEmptyComponent } from './empyComponent.js';
+import { generateCourseTasksList } from './generateCourseTasks.js';
 import { generateLanguageTasksList } from './generateLanguageTasks.js';
 import { generateProjectsTasksList } from './generateProjectTasks.js';
 import { generateStudyTasksList } from './generateStudyTasks.js';
@@ -27,6 +28,11 @@ export const getTasksData = async ({ API_URL, page }) => {
 			});
 		} else if (page === 'study') {
 			generateStudyTasksList({
+				listItems: items,
+				API_URL,
+			});
+		} else if (page === 'course') {
+			generateCourseTasksList({
 				listItems: items,
 				API_URL,
 			});

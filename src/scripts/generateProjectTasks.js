@@ -55,7 +55,7 @@ export const generateProjectsTasksList = ({ listItems, API_URL }) => {
 
 		// Change status div class depending on the status
 		switch (item.status) {
-			case 'Not Started':
+			case 'Not started':
 				statusElement.classList.remove('in-progress', 'overdue', 'todo');
 				statusElement.classList.add('todo');
 				break;

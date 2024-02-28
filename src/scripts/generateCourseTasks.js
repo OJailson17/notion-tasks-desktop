@@ -1,14 +1,12 @@
 import { getTasksData } from './getTasks.js';
 import { getPage } from './script.js';
-import { updateLanguageStatus } from './updateLanguageStatus.js';
-import { updateProjectStatus } from './updateProjectStatus.js';
-import { updateStudyStatus } from './updateStudyStatus.js';
+import { updateCourseStatus } from './updateCouseStatus.js';
 
 // The container the will render the whole task list
 const taskListContainer = document.querySelector('#tasks-container');
 
 // Render the list of elements
-export const generateStudyTasksList = ({ listItems, API_URL }) => {
+export const generateCourseTasksList = ({ listItems, API_URL }) => {
 	// Create li on the ul element with the task title
 	listItems.forEach(item => {
 		// Create task element
@@ -30,15 +28,9 @@ export const generateStudyTasksList = ({ listItems, API_URL }) => {
 		// Add a event listener to verify if input is checked
 		checkboxInput.addEventListener('change', async e => {
 			// Call function to change task status on Notion
-			let status = 'Not Started';
-
-			if (e.target.checked) {
-				status = 'Done';
-			}
-
-			updateStudyStatus({
+			updateCourseStatus({
 				id: e.target.dataset.id,
-				status,
+				isChecked: e.target.checked,
 				API_URL,
 			})
 				.then(async response => {
@@ -57,8 +49,8 @@ export const generateStudyTasksList = ({ listItems, API_URL }) => {
 		taskContentDiv.setAttribute('class', 'badge-container');
 
 		const topicTextParagraph = document.createElement('p');
-		topicTextParagraph.innerText = item.topic;
-		topicTextParagraph.style.background = item.topic_color;
+		topicTextParagraph.innerText = item.trail;
+		topicTextParagraph.style.background = item.trail_color;
 
 		// Create a span element to add the task text value
 		const span = document.createElement('span');
@@ -67,49 +59,33 @@ export const generateStudyTasksList = ({ listItems, API_URL }) => {
 		taskContentDiv.appendChild(span);
 		taskContentDiv.appendChild(topicTextParagraph);
 
-		// Skip task button
-		const skipButton = document.createElement('button');
-		const skipButtonIcon = document.createElement('img');
-		skipButtonIcon.setAttribute('src', '../assets/skip-icon.svg');
-		skipButton.setAttribute('class', 'skip-button');
-		skipButton.setAttribute('data-id', item.id);
-		skipButton.appendChild(skipButtonIcon);
-
-		skipButton.addEventListener('click', event => {
-			updateStudyStatus({
-				id: event.target.dataset.id,
-				status: 'Skipped',
-				API_URL,
-			})
-				.then(async response => {
-					const { page } = getPage();
-
-					// Re-reder the list if the status changes correctly
-					if (response.status === 200) {
-						console.log({ response });
-						await getTasksData({ API_URL, page });
-					}
-				})
-				.catch(err => console.log(err));
-		});
-
 		// Create a div to show task status
 		const statusElement = document.createElement('div');
 		statusElement.setAttribute('class', 'status');
 
 		// Change status div class depending on the status
-		if (item.status === 'In progress') {
-			statusElement.classList.remove('in-progress', 'overdue', 'todo');
-			statusElement.classList.add('in-progress');
-		} else {
-			statusElement.classList.remove('in-progress', 'skipped', 'todo');
-			statusElement.classList.add('todo');
+		switch (item.status) {
+			case 'Not Started':
+				statusElement.classList.remove('in-progress', 'overdue', 'todo');
+				statusElement.classList.add('todo');
+				break;
+			case 'In progress':
+				statusElement.classList.remove('in-progress', 'overdue', 'todo');
+				statusElement.classList.add('in-progress');
+				break;
+			case 'Overdue':
+				statusElement.classList.remove('in-progress', 'overdue', 'todo');
+				statusElement.classList.add('overdue');
+				break;
+			default:
+				statusElement.classList.remove('in-progress', 'overdue', 'todo');
+				statusElement.classList.add('todo');
 		}
 
 		// Append the input, span and div element in the task div container
 		taskDiv.appendChild(checkboxInput);
 		taskDiv.appendChild(taskContentDiv);
-		taskDiv.appendChild(skipButton);
+		// taskDiv.appendChild(skipButton);
 		taskDiv.appendChild(statusElement);
 
 		// Append the task container on the
