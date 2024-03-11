@@ -49,8 +49,8 @@ export const generateCourseTasksList = ({ listItems, API_URL }) => {
 		taskContentDiv.setAttribute('class', 'badge-container');
 
 		const topicTextParagraph = document.createElement('p');
-		topicTextParagraph.innerText = item.trail;
-		topicTextParagraph.style.background = item.trail_color;
+		topicTextParagraph.innerText = item.tag;
+		topicTextParagraph.style.background = item.tag_color;
 
 		// Create a span element to add the task text value
 		const span = document.createElement('span');
