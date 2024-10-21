@@ -91,19 +91,20 @@ export const generateLanguageTasksList = ({ listItems, API_URL }) => {
 			statusElement.classList.remove('in-progress', 'overdue', 'todo');
 			statusElement.classList.add('in-progress');
 		} else {
-			if (item?.isOverdue) {
-				statusElement.classList.remove('in-progress', 'overdue', 'todo');
-				statusElement.classList.add('overdue');
-			} else {
-				statusElement.classList.remove('in-progress', 'skipped', 'todo');
-				statusElement.classList.add('todo');
-			}
+			statusElement.classList.remove('in-progress', 'skipped', 'todo');
+			statusElement.classList.add('todo');
 		}
+
+		item.date = item.date.replaceAll('-', '/');
 
 		// add a today badge if task is from today
 		const isFromToday =
-			new Date().toLocaleDateString() ===
-			new Date(item.date).toLocaleDateString();
+			new Date().toLocaleDateString('pt-BR', {
+				timeZone: 'America/Sao_Paulo',
+			}) ===
+			new Date(item.date).toLocaleDateString('pt-BR', {
+				timeZone: 'America/Sao_Paulo',
+			});
 
 		if (isFromToday) {
 			const todayBadge = document.createElement('p');
